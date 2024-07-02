@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_app/Screens/widgets/product_item_card.dart';
+import 'package:shopping_app/dummyData.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -28,7 +30,7 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.all(20.0),
                   child: Text('Shoes \nCollection',
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 35)),
+                          Theme.of(context).textTheme.titleLarge),
                 ),
                 Expanded(
                   child: Padding(
@@ -36,7 +38,7 @@ class _HomePageState extends State<HomePage> {
                     child: TextField(
                       decoration: InputDecoration(
                           hintText: 'Search',
-                          prefixIcon: Icon(Icons.search),
+                          prefixIcon: const Icon(Icons.search),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.grey[800]!),
                             borderRadius: BorderRadius.circular(30),
@@ -63,22 +65,34 @@ class _HomePageState extends State<HomePage> {
                           child: Chip(
                             backgroundColor: _selected == filters[index]
                                 ? Theme.of(context).colorScheme.primary
-                                : Color.fromARGB(255, 230, 230, 230),
-                            side: BorderSide(
+                                : Colors.white,
+                            side: const BorderSide(
                                 color: Color.fromARGB(255, 236, 235, 235)),
                             label: Text(
                               filters[index],
                             ),
-                            labelStyle: TextStyle(fontSize: 16),
-                            padding: EdgeInsets.all(15),
-                            shape: RoundedRectangleBorder(
+                            labelStyle: const TextStyle(fontSize: 16),
+                            padding: const EdgeInsets.all(15),
+                            shape: const RoundedRectangleBorder(
                                 borderRadius: BorderRadius.horizontal(
                                     left: Radius.circular(27),
                                     right: Radius.circular(27))),
                           ),
                         ),
                       );
-                    }))
+                    })),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: products.length,
+                  itemBuilder: (context, index) {
+                    return ProductItemCard(
+                      title: products[index]['title'] as String,
+                      price: products[index]['price'] as double,
+                      image: products[index]['image'] as String,
+                      company: products[index]['company'] as String,
+                    );
+                  }),
+            )
           ],
         ),
       ),
