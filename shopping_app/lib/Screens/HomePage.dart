@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_app/Screens/ProductsDetail.dart';
 import 'package:shopping_app/Screens/widgets/product_item_card.dart';
 import 'package:shopping_app/dummyData.dart';
 
@@ -29,8 +30,7 @@ class _HomePageState extends State<HomePage> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Text('Shoes \nCollection',
-                      style:
-                          Theme.of(context).textTheme.titleLarge),
+                      style: Theme.of(context).textTheme.titleLarge),
                 ),
                 Expanded(
                   child: Padding(
@@ -85,11 +85,20 @@ class _HomePageState extends State<HomePage> {
               child: ListView.builder(
                   itemCount: products.length,
                   itemBuilder: (context, index) {
-                    return ProductItemCard(
-                      title: products[index]['title'] as String,
-                      price: products[index]['price'] as double,
-                      image: products[index]['image'] as String,
-                      company: products[index]['company'] as String,
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ProductDetail(product: products[index])));
+                      },
+                      child: ProductItemCard(
+                        title: products[index]['title'] as String,
+                        price: products[index]['price'] as double,
+                        image: products[index]['image'] as String,
+                        company: products[index]['company'] as String,
+                      ),
                     );
                   }),
             )

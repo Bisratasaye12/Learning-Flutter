@@ -16,32 +16,26 @@ class ProductItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => ProductDetail(product: products[0])));
-      },
-      child: Card(
-        margin: const EdgeInsets.all(20),
-        color: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: Theme.of(context).textTheme.titleMedium,
+    return Card(
+      margin: const EdgeInsets.all(20),
+      color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            Text('\$$price', style: Theme.of(context).textTheme.bodySmall),
+            Center(
+              child: Image.asset(
+                image,
+                height: 175,
               ),
-              Text('\$$price', style: Theme.of(context).textTheme.bodySmall),
-              Center(
-                child: Image.asset(
-                  image,
-                  height: 175,
-                ),
-              )
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );
