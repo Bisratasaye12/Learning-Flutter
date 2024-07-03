@@ -40,3 +40,14 @@ final products = [
     'image': 'assets/images/image_4.jpeg'
   }
 ];
+
+final cart = [
+  {
+    'id': 5,
+    'title': 'Chuck Taylor All Star',
+    'price': 55.00,
+    'size': 8,
+    'company': 'Converse',
+    'image': 'assets/images/image_4.jpeg'
+  }
+];
