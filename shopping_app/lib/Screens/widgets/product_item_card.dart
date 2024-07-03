@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_app/Screens/ProductsDetail.dart';
+import 'package:shopping_app/dummyData.dart';
 
 class ProductItemCard extends StatelessWidget {
   final title;
@@ -18,7 +19,7 @@ class ProductItemCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => ProductDetail()));
+            context, MaterialPageRoute(builder: (context) => ProductDetail(product: products[0])));
       },
       child: Card(
         margin: const EdgeInsets.all(20),
