@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shopping_app/Providers/cart_provider.dart';
 
 class ProductDetail extends StatefulWidget {
   final Map<String, dynamic> product;
@@ -19,11 +21,29 @@ class _ProductDetailState extends State<ProductDetail> {
 
   @override
   Widget build(BuildContext context) {
+    void onTap() {
+      if (_selected != 0) {
+        Provider.of<CartProvider>(context, listen: false).addToCart({
+          'id': widget.product['id'],
+          'title': widget.product['title'],
+          'price': widget.product['price'],
+          'size': _selected,
+          'company': widget.product['company'],
+          'image': widget.product['image']
+        });
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Product added to Cart')));
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Please select a size!')));
+      }
+    }
+
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Text('Details'),
+          title: const Text('Details'),
           centerTitle: true,
         ),
         body: Padding(
@@ -90,7 +110,7 @@ class _ProductDetailState extends State<ProductDetail> {
                     Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: onTap,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Theme.of(context).primaryColor,
                             minimumSize: const Size(double.infinity, 50),
