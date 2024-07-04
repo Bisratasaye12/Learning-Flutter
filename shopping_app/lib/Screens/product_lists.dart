@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shopping_app/Providers/product_provider.dart';
 import 'package:shopping_app/Screens/ProductsDetail.dart';
 import 'package:shopping_app/Screens/widgets/product_item_card.dart';
-import 'package:shopping_app/dummyData.dart';
 
 class ProductLists extends StatefulWidget {
   const ProductLists({super.key});
@@ -21,6 +22,9 @@ class _ProductListsState extends State<ProductLists> {
 
   @override
   Widget build(BuildContext context) {
+    final productProvider =
+        Provider.of<ProductProvider>(context, listen: false);
+
     return SafeArea(
       child: Column(
         children: [
@@ -42,6 +46,9 @@ class _ProductListsState extends State<ProductLists> {
                           borderSide: BorderSide(color: Colors.grey[800]!),
                           borderRadius: BorderRadius.circular(30),
                         )),
+                    onChanged: (value) {
+                      productProvider.setSearchQuery(value);
+                    },
                   ),
                 ),
               )
@@ -81,25 +88,30 @@ class _ProductListsState extends State<ProductLists> {
                     );
                   })),
           Expanded(
-            child: ListView.builder(
-                itemCount: products.length,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  ProductDetail(product: products[index])));
-                    },
-                    child: ProductItemCard(
-                      title: products[index]['title'] as String,
-                      price: products[index]['price'] as double,
-                      image: products[index]['image'] as String,
-                      company: products[index]['company'] as String,
-                    ),
-                  );
-                }),
+            child: Consumer<ProductProvider>(
+              builder: (context, provider, child) {
+                final products = provider.Products;
+                return ListView.builder(
+                    itemCount: products.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      ProductDetail(product: products[index])));
+                        },
+                        child: ProductItemCard(
+                          title: products[index]['title'] as String,
+                          price: products[index]['price'] as double,
+                          image: products[index]['image'] as String,
+                          company: products[index]['company'] as String,
+                        ),
+                      );
+                    });
+              },
+            ),
           )
         ],
       ),
