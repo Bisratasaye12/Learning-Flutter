@@ -12,7 +12,7 @@ class ProductLists extends StatefulWidget {
 }
 
 class _ProductListsState extends State<ProductLists> {
-  final filters = const ['all', "Adidas", "Nike", "Yeezy", "New Balance"];
+  final filters = const ['all', "Adidas", "Nike", "Yeezy", "New Balance", "All Star"];
   late var _selected;
 
   @override
@@ -66,6 +66,11 @@ class _ProductListsState extends State<ProductLists> {
                         onTap: () {
                           setState(() {
                             _selected = filters[index];
+                            if (_selected != "all") {
+                              productProvider.setSearchQuery(_selected);
+                            } else{
+                              productProvider.setSearchQuery("");
+                            }
                           });
                         },
                         child: Chip(

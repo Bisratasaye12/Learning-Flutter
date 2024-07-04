@@ -11,9 +11,13 @@ class ProductProvider with ChangeNotifier {
       return _products;
     } else {
       return _products
-          .where((product) => (product['title'] as String)
-              .toLowerCase()
-              .contains(_searchQuery.toLowerCase()))
+          .where((product) =>
+              ((product['title'] as String)
+                  .toLowerCase()
+                  .contains(_searchQuery.toLowerCase())) ||
+              (product['company'] as String)
+                  .toLowerCase()
+                  .contains(_searchQuery.toLowerCase()))
           .toList();
     }
   }
